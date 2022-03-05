@@ -200,7 +200,6 @@ const app = {
     // Handle events
     handleEvents: function(){
         const cdWidth = cd.offsetWidth;
-        const _this = this;
 
         // Xu ly phong to, thu nho cd play
         document.onscroll = function(){
@@ -220,8 +219,8 @@ const app = {
         cdAnimate.pause();
         
         // play song
-        playBtn.onclick = function(){
-            if(_this.isPlaying){
+        playBtn.onclick = ()=>{
+            if(this.isPlaying){
                 audio.pause();
             }else{
                 audio.play();
@@ -229,43 +228,43 @@ const app = {
         }
 
         // Listen event of audio
-        audio.onplay = function(){
-            _this.isPlaying = true;
+        audio.onplay = ()=>{
+            this.isPlaying = true;
             player.classList.add('playing');
             cdAnimate.play();
         }
-        audio.onpause = function(){
-            _this.isPlaying = false;
+        audio.onpause = ()=>{
+            this.isPlaying = false;
             player.classList.remove('playing');
             cdAnimate.pause();
         }
 
         // To next song
-        nextBtn.onclick = function(){
-            if(_this.isRandom){
-                _this.randomSong();
+        nextBtn.onclick = ()=>{
+            if(this.isRandom){
+                this.randomSong();
             }else{
-                _this.toNextSong();
+                this.toNextSong();
             }
             audio.play();
-            _this.render();
-            _this.scrollActiveSong();
+            this.render();
+            this.scrollActiveSong();
         }
 
         // To previous song
-        prevBtn.onclick = function(){
-            if(_this.isRandom){
-                _this.randomSong();
+        prevBtn.onclick = ()=>{
+            if(this.isRandom){
+                this.randomSong();
             }else{
-                _this.toPrevSong();
+                this.toPrevSong();
             }
             audio.play();
-            _this.render();
-            _this.scrollActiveSong();
+            this.render();
+            this.scrollActiveSong();
         }
 
         // Thay doi tien do bai hat
-        audio.ontimeupdate = function(){
+        audio.ontimeupdate = ()=>{
             if(audio.duration){
                 progress.value = Math.floor(audio.currentTime / audio.duration * 100);
             }
@@ -278,20 +277,20 @@ const app = {
         }
 
         // Xu ly random song
-        randomBtn.onclick = function(){
-            _this.isRandom = !_this.isRandom;
-            randomBtn.classList.toggle('active', _this.isRandom);
+        randomBtn.onclick = ()=>{
+            this.isRandom = !this.isRandom;
+            randomBtn.classList.toggle('active', this.isRandom);
         }
 
         // Xu ly repeat song
-        repeatBtn.onclick = function(){
-            _this.isRepeat = !_this.isRepeat;
-            repeatBtn.classList.toggle('active', _this.isRepeat);
+        repeatBtn.onclick = ()=>{
+            this.isRepeat = !this.isRepeat;
+            repeatBtn.classList.toggle('active', this.isRepeat);
         }
 
         // Xu ly khi bai hat ket thuc
-        audio.onended = function(){
-            if(_this.isRepeat){
+        audio.onended = ()=>{
+            if(this.isRepeat){
                 audio.play()
             }else{
                nextBtn.click();
@@ -299,16 +298,16 @@ const app = {
         }
 
         // Lang nghe khi click vao playlist
-        playlist.onclick = function(e){
+        playlist.onclick = (e)=>{
             const songNode = e.target.closest('.song:not(.active)');
             if(songNode || e.target.closest('.option')){
                 // Xu ly khi click vao song
                 if(songNode){
-                    _this.currentIndex = Number (songNode.dataset.index); // songNode.dataset.index tra ve chuoi nen phai ep kieu sang Number
-                    // Hoac dung getAttribute: _this.currentIndex = songNode.getAttribute('data-index'); 
-                    _this.loadCurrentSong();
+                    this.currentIndex = Number (songNode.dataset.index); // songNode.dataset.index tra ve chuoi nen phai ep kieu sang Number
+                    // Hoac dung getAttribute: this.currentIndex = songNode.getAttribute('data-index'); 
+                    this.loadCurrentSong();
                     audio.play();
-                    _this.render();
+                    this.render();
                 }
 
                 // Xu ly khi click vao option (dau ...) 
